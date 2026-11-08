@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<article class="post{% if page.media.size == 0 and page.youtube.size == 0 %} text-only{% endif %}">
+  {% if page.media.size > 0 or page.youtube.size > 0 %}
+  <div class="media">
+    <div class="carousel" tabindex="0">
+      {% for m in page.media %}
+      <div class="slide">
+        {% if m.video %}
+          <video src="{{ m.video | relative_url }}"{% if m.src %} poster="{{ m.src | relative_url }}"{% endif %} controls playsinline preload="none"></video>
+        {% else %}
+          <img src="{{ m.src | relative_url }}" alt="{{ m.alt | escape }}" {% unless forloop.first %}loading="lazy"{% endunless %}>
+        {% endif %}
+      </div>
+      {% endfor %}
+      {% for y in page.youtube %}
+      <div class="slide yt">
+        <iframe src="https://www.youtube-nocookie.com/embed/{{ y }}" title="YouTube video" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      {% endfor %}
+    </div>
+    {% assign n = page.media.size | plus: page.youtube.size %}
+    {% if n > 1 %}
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+    <div class="dots">{% for i in (1..n) %}<span{% if forloop.first %} class="on"{% endif %}></span>{% endfor %}</div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="side">
+    <header class="post-head">
+      <img class="mini-avatar" src="{{ site.avatar | relative_url }}" alt="">
+      <div>
+        <strong>{{ site.handle }}</strong>
+        {% if page.location %}<div class="loc">{{ page.location }}</div>{% endif %}
+      </div>
+    </header>
+    <div class="caption">
+      {{ content }}
+      {% if page.tags.size > 0 %}<p class="tags">{% for t in page.tags %}<span class="hashtag">#{{ t }}</span> {% endfor %}</p>{% endif %}
+    </div>
+    <footer class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+      {% if page.original_url %} · <a href="{{ page.original_url }}">originally on {{ page.source | capitalize }}</a>{% endif %}
+    </footer>
+    <nav class="prevnext">
+      {% if page.next %}<a href="{{ page.next.url | relative_url }}">← newer</a>{% else %}<span></span>{% endif %}
+      {% if page.previous %}<a href="{{ page.previous.url | relative_url }}">older →</a>{% endif %}
+    </nav>
+  </div>
+</article>

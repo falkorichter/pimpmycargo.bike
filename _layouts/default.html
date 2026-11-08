@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title and page.layout == "post" %}{{ page.title | strip_html | truncate: 60 }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+  {% if page.thumb %}<meta property="og:image" content="{{ page.thumb | absolute_url }}">{% endif %}
+  <link rel="icon" href="{{ site.avatar | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  </header>
+  <main>
+    {{ content }}
+  </main>
+  <footer class="footer">
+    <a href="{{ '/feed.xml' | relative_url }}">RSS</a> · self-hosted with Jekyll
+  </footer>
+  <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
+</body>
+</html>

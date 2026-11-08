@@ -1,0 +1,7 @@
+_site/
+.jekyll-cache/
+.sass-cache/
+.bundle/
+vendor/
+# raw exports (contain signed CDN URLs and third-party metadata); re-run tools/import.py from these
+_import/

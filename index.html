@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<section class="profile">
+  <img class="avatar" src="{{ site.avatar | relative_url }}" alt="{{ site.handle }}">
+  <div class="profile-info">
+    <h1>{{ site.handle }}</h1>
+    <ul class="stats">
+      <li><strong>{{ site.posts.size }}</strong> posts</li>
+      <li><strong>{{ site.posts | where: "source", "instagram" | size }}</strong> from Instagram</li>
+      <li><strong>{{ site.posts | where: "source", "tumblr" | size }}</strong> from Tumblr</li>
+    </ul>
+    <p class="bio">{{ site.description }}</p>
+    {% if site.links %}<p class="links">{% for l in site.links %}<a href="{{ l.url }}">{{ l.name }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</p>{% endif %}
+  </div>
+</section>
+
+<nav class="tabs" aria-label="Filter posts">
+  <button class="active" data-filter="all">All</button>
+  <button data-filter="instagram">Instagram</button>
+  <button data-filter="tumblr">Tumblr</button>
+  <button data-filter="video">Videos</button>
+</nav>
+
+<div class="grid">
+  {% for post in site.posts %}
+  <a class="tile" href="{{ post.url | relative_url }}" data-source="{{ post.source }}"{% if post.is_video %} data-video{% endif %} title="{{ post.title | strip_html | escape }}">
+    {% if post.thumb %}
+      <img src="{{ post.thumb | relative_url }}" alt="{{ post.media[0].alt | default: post.title | strip_html | escape }}" loading="lazy">
+    {% else %}
+      <div class="text-tile"><span>{{ post.title | strip_html | truncate: 90 }}</span></div>
+    {% endif %}
+    <span class="badges">
+      {% if post.media.size > 1 %}<svg viewBox="0 0 24 24" aria-label="Album"><path d="M7 3h12a2 2 0 0 1 2 2v12h-2V5H7z"/><rect x="3" y="7" width="14" height="14" rx="2"/></svg>{% endif %}
+      {% if post.is_video %}<svg viewBox="0 0 24 24" aria-label="Video"><path d="M8 5v14l11-7z"/></svg>{% endif %}
+      {% if post.source == "tumblr" %}<svg viewBox="0 0 24 24" aria-label="From Tumblr"><text x="12" y="18" text-anchor="middle" font-size="17" font-weight="700" font-family="Georgia,serif">t</text></svg>{% endif %}
+    </span>
+    <span class="overlay">{{ post.date | date: "%b %-d, %Y" }}</span>
+  </a>
+  {% endfor %}
+</div>

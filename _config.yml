@@ -1,0 +1,23 @@
+title: pimpmycargo.bike
+description: >-
+  Run by @volkersfreunde - all about improving the cargo bike lifestyle.
+  I'm also an intern for @radelbande and volunteer at @35services
+handle: pimpmycargo.bike
+avatar: /assets/avatar.jpg
+links:
+  - name: Instagram
+    url: https://www.instagram.com/pimpmycargo.bike/
+  - name: Tumblr
+    url: https://www.tumblr.com/pimpmycargobike
+url: "https://pimpmycargo.bike"
+baseurl: ""
+permalink: /p/:slug/
+timezone: Europe/Berlin
+markdown: kramdown
+exclude:
+  - tools/
+  - _import/
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor/
